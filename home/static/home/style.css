@@ -1,0 +1,41 @@
+.home-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    overflow-y: hidden;
+}
+
+.home-title {
+    font-size: 9rem;
+    max-width: 1150px;
+}
+
+.home-subtitle {
+    font-size: 2rem;
+    text-align: right;
+    max-width: 40%;
+}
+
+@media only screen and (max-width: 1000px) {
+    .home-title {
+        font-size: 4rem;
+        max-width: fit-content;
+        text-align: center;
+    }
+
+    .home-subtitle {
+        font-size: 1.5rem;
+        margin-right: auto;
+        text-align: left;
+        max-width: fit-content;
+    }
+
+    .home-wrapper {
+        justify-content: flex-start;
+        align-items: center;
+        height: 95%;
+        flex-wrap: wrap;
+        overflow-y: hidden;
+    }
+}

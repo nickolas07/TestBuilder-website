@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load clean_identifier %}
+{% block title %}Kontrollen{% endblock %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'kontrollen/style.css' %}"/>
+{% endblock %}
+{% block content %}
+    <div class="kontrollen-wrapper">
+        <div class="kontrollen-version">
+            <strong>Version vom:</strong> 23. Juli 2024, 13:30
+        </div>
+        <div class="row kontrolle-row">
+            {% for kontrolle in Kontrollen %}
+                <ul class="kontrolle col list-group">
+                    <li class="list-group-item kontrolle-li p-3 justify-content-between align-items-center">
+                        <div class="kontrolle-text">
+                            {{ kontrolle.name }}
+                        <div class="kontrolle-subtitle">
+                            {{ kontrolle.identifier|clean_identifier }}
+                        </div>
+                            <br>
+                            {% if kontrolle.beispiel %}
+                                <a type="button" class="kontrolle-beispiel btn btn-outline-secondary" href="Beispiel {{ kontrolle.identifier }}" target="_blank">Beispiel</a>
+                            {% else %}
+                                <a type="button" class="kontrolle-beispiel btn btn-outline-secondary disabled" href="Beispiel {{ kontrolle.identifier }}" target="_blank">Beispiel</a>
+                            {% endif %}
+                        </div>
+                        <div class="btn-group" role="group">
+                            <a type="button" class="btn btn-outline-secondary" href="probe/{{ kontrolle.identifier }}" target="_self">Probe</a>
+                            <a type="button" class="btn btn-outline-success" href="erstellen/{{ kontrolle.identifier }}" target="_self">Erstellen</a>
+                        </div>
+                    </li>
+                </ul>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

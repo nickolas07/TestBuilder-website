@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Nicht Gefunden{% endblock %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'suchen/style.css' %}"/>
+{% endblock %}
+{% block content %}
+    <div class="not-found">
+        <span class="bb2d3b">Keine Kontrolle gefunden</span>
+        <br>
+        <a type="button" href="/suchen" class="btn btn-outline-secondary btn-zurück link-light link-offset-2 link-underline link-underline-opacity-0">Zurück</a>
+    </div>
+{% endblock %}

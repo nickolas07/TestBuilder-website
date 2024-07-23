@@ -1,0 +1,65 @@
+@font-face {
+    font-family: 'Rubik';
+    src: url("fonts/Rubik/Rubik-VariableFont_wght.ttf") format('truetype');
+}
+
+@font-face {
+    font-family: 'Vollkorn';
+    src: url("fonts/Vollkorn/Vollkorn-VariableFont_wght.ttf") format('truetype');
+}
+
+.rubik-200 {
+    font-family: 'Rubik', sans-serif;
+    font-style: normal;
+    font-weight: 200;
+}
+
+.rubik-400 {
+    font-family: 'Rubik', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.vollkorn-400 {
+    font-family: 'Vollkorn', serif;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.content {
+    margin: 2%;
+}
+
+.page-404 {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 3rem;
+}
+
+.border-align {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    border-radius: 15px;
+    border: 2px solid #686868;
+    padding: 1.5rem;
+    width: fit-content;
+    height: fit-content;
+    max-width: 80%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/*Farben*/
+.bb2d3b {
+    color: #bb2d3b;
+}

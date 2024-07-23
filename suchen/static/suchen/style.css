@@ -1,0 +1,130 @@
+/*suchen*/
+.kontrolle-suchen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title-suchen {
+    font-size: 9rem;
+    text-align: center;
+    height: fit-content;
+}
+
+.otp-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 50px;
+    width: 300px;
+}
+
+.otp-group {
+    display: flex;
+    width: 75%;
+    justify-content: center;
+    align-items: center;
+    padding-top: 20px;
+    margin: auto;
+}
+
+.otp {
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+    width: 7vw;
+    height: 7vw;
+    font-size: 4vw;
+    text-align: center;
+    line-height: 10px;
+    border-radius: 20px;
+}
+
+.spinner-border {
+    height: 2vw;
+    width: 2vw;
+    margin: 1vw
+}
+
+#submit-btn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 22rem;
+    height: 5.5rem;
+    font-size: 2.3rem;
+    border-radius: 20px;
+    margin-top: 4.5%;
+    min-width: fit-content;
+}
+
+@media only screen and (max-width: 1000px){
+    .title-suchen {
+        font-size: 4rem;
+    }
+
+    .otp-group {
+        display: grid;
+        grid: repeat(3, 1fr) / repeat(4, 1fr);
+        gap: 1rem;
+        justify-items: center;
+        align-items: center;
+    }
+
+    .otp {
+        margin-right: 0 !important;
+        margin-left: 0 !important;
+        width: 15vw;
+        height: 15vw;
+        font-size: 8vw;
+        border-radius: 15px;
+    }
+
+    #submit-btn {
+        width: 12rem;
+        height: 4rem;
+        font-size: 1.5rem;
+        border-radius: 15px;
+        margin-top: 4.5%;
+    }
+
+    .spinner-border {
+        width: 5vw;
+        height: 5vw;
+    }
+}
+
+/*nichtGefunden*/
+.not-found {
+    font-size: 5.5rem;
+    text-align: center;
+    margin-top: 20vh;
+}
+
+.btn-zurück {
+    display: flex;
+    margin: 5vh auto;
+    width: 18vw;
+    height: 4.5vw;
+    font-size: 2vw;
+    border-radius: 1vw;
+    justify-content: center;
+    align-items: center;
+}
+
+@media only screen and (max-width: 1000px) {
+    .not-found {
+        font-size: 3rem;
+    }
+
+    .btn-zurück {
+        min-width: fit-content;
+        min-height: fit-content;
+        width: 15rem;
+        height: 5rem;
+        font-size: 1.5rem;
+        border-radius: 1rem;
+    }
+}

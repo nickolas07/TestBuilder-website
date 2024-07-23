@@ -1,0 +1,75 @@
+/*Aufgaben*/
+.aufgabe-div {
+    width: fit-content;
+    max-width: 65%;
+    margin: auto;
+    text-align: center;
+}
+
+.parent {
+    margin-top: 0;
+    margin-left: 1vw;
+}
+
+.child-div {
+    display: table-cell;
+    vertical-align: middle;
+    font-size: 0.9rem;
+    font-weight: 350;
+}
+
+.parent-div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+    font-size: 1.25rem;
+    font-weight: 450;
+}
+
+.child-label {
+    padding-left: 1vw;
+    margin: auto 0;
+    text-align: left;
+}
+
+.btn-weiter {
+    margin-top: 4%;
+    width: 15vw;
+    min-width: 5rem;
+}
+
+.aufgabe {
+     padding: 3%;
+}
+
+.aufgabe-title {
+    margin-bottom: 2%;
+}
+
+.aufgabe-subtitle {
+    font-size: 1.2rem;
+}
+
+@media only screen and (max-width: 500px) and (orientation: portrait) {
+    .aufgabe-div {
+        max-width: 95%;
+    }
+
+    .parent-div {
+        font-size: 1rem;
+    }
+
+    .child-div {
+        text-align: left;
+        font-size: 0.75rem;
+    }
+
+    .aufgabe {
+        padding: 1.2rem;
+    }
+
+    .aufgabe-title {
+        font-size: 140%;
+    }
+}
