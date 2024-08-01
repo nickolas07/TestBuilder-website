@@ -69,7 +69,7 @@ for element in aufgaben_seite1:
 
 liste_seiten = [seite(aufgaben_seite1)]
 
-schule, schulart, Kurs, Klasse, Lehrer, datum_delta = str, str, str, str, str, 0
+schule, schulart, Kurs, Klasse, Lehrer, Titel, datum_delta = str, str, str, str, str, str, 0
 angaben = [schule, schulart, Kurs, Fach, Klasse, Lehrer, Art, Titel, datum_delta, liste_bez, liste_punkte, False,
            identifier, uuid]
 

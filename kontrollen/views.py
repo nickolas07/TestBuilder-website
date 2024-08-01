@@ -46,11 +46,12 @@ def view(request, identifier: str):
 
 
 def pdf(response, identifier):
-    beispiel = True if identifier.split(' ')[0] == 'Beispiel' else False
-    if beispiel:
-        file_path = f'{path}/skripteKontrollen/pdf/beispiele/{identifier}.pdf'
-    else:
-        file_path = f'{path}/skripteKontrollen/pdf/{identifier}.pdf'
+    file_path = f'{path}/skripteKontrollen/pdf/{identifier}.pdf'
+    return FileResponse(open(file_path, 'rb'), content_type='application/pdf')
+
+
+def beispiel(response, identifier):
+    file_path = f'{path}/skripteKontrollen/pdf/beispiele/{identifier}.pdf'
     return FileResponse(open(file_path, 'rb'), content_type='application/pdf')
 
 
@@ -62,14 +63,14 @@ def download(response, identifier):
         return response
 
 
-def erstellen(identifier, schule='', schulart='', kurs='', lehrer='', klasse='', datum='', probe=True, aufgaben=None, schnell=False):
+def erstellen(identifier, schule='', schulart='', kurs='', lehrer='', klasse='', titel='', datum='', probe=True, aufgaben=None, schnell=False):
     themenbereich = Themen.objects.filter(name=identifier).exists()
     uuid = get_uuid()
     cwd = os.getcwd()
     os.chdir(f'{path}/skripteKontrollen')
     if themenbereich:
         os.system(f'python "themen.py" "{identifier}" "{uuid}" "0:{schule}" "1:{schulart}" "2:{kurs}" '
-                  f'"4:{klasse}" "5:{lehrer}" "8:{datum}" "{probe}" "{aufgaben}"')
+                  f'"4:{klasse}" "5:{lehrer}" "7:{titel}" "8:{datum}" "{probe}" "{aufgaben}"')
     elif schnell:
         os.system(f'python "{identifier}.py" "{uuid}" "{probe}"')
     else:
@@ -103,11 +104,13 @@ def kontrolle_erstellen(request, identifier, aufgaben=None):
             kurs = form.cleaned_data['kurs']
             lehrer = form.cleaned_data['lehrer']
             klasse = form.cleaned_data['klasse']
+            titel = form.cleaned_data['titel']
+            titel = titel if titel is not '' else identifier
             datum = form.cleaned_data['datum'].strftime('%d.%m.%Y') if form.cleaned_data['datum'] is not None else None
             kontrollen_art = form.cleaned_data['kontrollen_art']
             probe = True if kontrollen_art == 'Probe' else False
             uuid = erstellen(identifier, schule, schulart, kurs, lehrer,
-                             klasse, datum, probe, aufgaben)
+                             klasse, titel, datum, probe, aufgaben)
 
             return redirect(to=f'/kontrollen/{identifier} {uuid}')
     else:

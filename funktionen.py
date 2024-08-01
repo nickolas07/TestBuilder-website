@@ -30,12 +30,13 @@ def get_uuid(length: int = 8, implement: str = '') -> str:  # < 32 und % 2 == 0
         return get_uuid(length, implement)
 
 
-def get_aufgaben(themenbereich: str = None):
-    stufe = Themen.objects.get(name=themenbereich).stufe
+def get_aufgaben(themenbereich: str = None) -> list | None:
     if themenbereich is None:
         return None
 
-    def umlaute(text: str):
+    stufe = Themen.objects.get(name=themenbereich).stufe
+
+    def sonderzeichen(text: str):
         text = text.replace('Ã¶', 'ö')
         text = text.replace('Ã¼', 'ü')
         text = text.replace('Ã¤', 'ä')
@@ -45,50 +46,51 @@ def get_aufgaben(themenbereich: str = None):
         text = text.replace('ÃŸ', 'ß')
         return text
 
-    def check_in(node):
-        """Checks if the node is an If statement with 'in' operation"""
-        if isinstance(node, ast.If):
-            for child in ast.iter_child_nodes(node):
-                if isinstance(child, ast.Compare) and isinstance(child.ops[0], ast.In):
-                    return True
-        return False
+    def in_comments(nummer: int, comments: list) -> (bool, int):
+        for i, comment in enumerate(comments):
+            if nummer in comment:
+                return True, i
+            else:
+                continue
+        return False, i
 
-    def get_func_and_if_comment(filename):
-        with open(filename, 'r') as file:
-            content = file.read()
+    def tree(filename: str) -> list:
+        with open(filename, 'r') as f:
+            content = f.read()
 
+        with open(filename, 'r') as f:
+            comments = [(token.start[0], sonderzeichen(token.string.replace('# ', ''))) for token in
+                        tokenize.generate_tokens(f.readline) if token.type == tokenize.COMMENT]
+
+        output = []
         root = ast.parse(content)
+        funktionen = [funktion for funktion in ast.walk(root) if isinstance(funktion, ast.FunctionDef)]
 
-        with open(filename, 'r') as file:
-            comments = [token for token in tokenize.generate_tokens(file.readline) if token.type == tokenize.COMMENT]
-        comments = [(comment.start[0], comment.string) for comment in comments]
-
-        comments_dict = {}
-
-        for node in ast.walk(root):
-            if isinstance(node, ast.FunctionDef) or check_in(node):
-                element_line = node.lineno
-                comment_line = element_line + 1
-                for line, comm in comments:
-                    if line == comment_line:
-                        comments_dict[node] = umlaute(comm.replace("# ", "", 1))
-
-        return comments_dict
+        for node in funktionen:
+            has_comment = in_comments(node.lineno + 1, comments)
+            if has_comment[0]:
+                output.append((node.lineno, sonderzeichen(node.name), comments[has_comment[1]][1]))
+            for child in ast.iter_child_nodes(node):
+                if isinstance(child, ast.If):
+                    has_comment = in_comments(child.lineno + 1, comments)
+                    if has_comment[0]:
+                        output.append((child.lineno, 'if', comments[has_comment[1]][1]))
+        return output
 
     try:
         module = importlib.import_module(f'skripteKontrollen.Aufgaben.{stufe}_{themenbereich}')
     except ModuleNotFoundError as e:
         raise e
-    file_path = inspect.getmodule(module).__file__
-    temp_comments = get_func_and_if_comment(file_path)
+    file_path: str = inspect.getmodule(module).__file__
     comments = {}
 
-    for i, (node, comment) in enumerate(temp_comments.items(), start=1):
-        if isinstance(node, ast.FunctionDef):
-            # comments[node.lineno] = [node.name.split('_')[-1].lstrip('0'), node.name, comment]
-            comments[node.lineno] = [str(i), node.name, comment]
-        elif check_in(node):
-            comments[node.lineno] = ['if', comment]
+    i = 1
+    for ln, name, comment in tree(file_path):
+        if name == 'if':
+            comments[ln] = ['if', comment]
+        else:
+            comments[ln] = [str(i), name, comment]
+            i += 1
 
     comments = sorted(comments.items())
     comments.append((1, [1, 2, 3]))

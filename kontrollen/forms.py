@@ -3,6 +3,14 @@ from django import forms
 
 class KontrolleErstellen(forms.Form):
     identifier = forms.CharField(label='identifier', widget=forms.HiddenInput(), required=False, localize=False)
+    titel = forms.CharField(
+        label='titel',
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'id': 'floatingTitel',
+            'placeholder': 'Titel'
+        }))
     schule = forms.CharField(
         label='schule',
         required=True,

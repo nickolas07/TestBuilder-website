@@ -138,20 +138,29 @@
     border-radius: 15px;
     border: 2px solid #686868;
     padding: 1.5rem;
-    width: fit-content;
+    width: min-content;
+    max-width: 40rem;
+    min-width: 32.5rem;
     height: fit-content;
-    max-width: 35%;
     align-items: center;
     justify-content: center;
     text-align: center;
 }
 
 .btn-submit {
-    width: 10rem;
+    width: 9rem;
+}
+
+.btn-vorlage {
+    width: 9rem;
 }
 
 .btn-reset {
     width: 10rem;
+}
+
+.btns {
+    padding: 5px;
 }
 
 @media only screen and (max-width: 500px) and (orientation: portrait) {
