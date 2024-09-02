@@ -23,6 +23,6 @@ def view_aufgaben(request, themenbereich):
                 if re.match(pattern, select) and str(i) not in selected:
                     selected.insert(j, str(i))
         print(selected)
-        return redirect(to=f'/kontrollen/erstellen/{themenbereich}/{selected}')
+        return redirect(to=f'/tests/erstellen/{themenbereich}/{selected}')
 
     return render(request, 'aufgaben.html', {'aufgaben': aufgaben, 'themenbereich': themenbereich, 'stufe': stufe})

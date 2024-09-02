@@ -1,11 +1,41 @@
 @font-face {
     font-family: 'Rubik';
-    src: url("fonts/Rubik/Rubik-VariableFont_wght.ttf") format('truetype');
+    src: url("fonts/Rubik/Rubik-variablefont_wght.woff2") format('woff2');
 }
 
 @font-face {
     font-family: 'Vollkorn';
-    src: url("fonts/Vollkorn/Vollkorn-VariableFont_wght.ttf") format('truetype');
+    src: url("fonts/Vollkorn/Vollkorn-variablefont_wght.woff2") format('woff2');
+}
+
+@font-face {
+    font-family: 'Poppins Regular';
+    src: url("fonts/Poppins/Poppins-regular.woff2") format('woff2');
+}
+
+@font-face {
+    font-family: 'Poppins Light';
+    src: url("fonts/Poppins/Poppins-light.woff2") format('woff2');
+}
+
+@font-face {
+    font-family: 'Poppins Extra Light';
+    src: url("fonts/Poppins/Poppins-extralight.woff2") format('woff2');
+}
+
+@font-face {
+    font-family: 'Libre Baskerville Regular';
+    src: url("fonts/Libre_Baskerville/Libre_Baskerville-regular.woff2") format('woff2');
+}
+
+@font-face {
+    font-family: 'Libre Bodoni';
+    src: url("fonts/Libre_Bodoni/Libre_Bodoni-variablefont_wght.woff2") format('woff2');
+}
+
+@font-face {
+    font-family: 'IBM Plex Sans Regular';
+    src: url("fonts/IBM_Plex_Sans/IBM_Plex_Sans-regular.woff2") format('woff2');
 }
 
 .rubik-200 {
@@ -22,6 +52,42 @@
 
 .vollkorn-400 {
     font-family: 'Vollkorn', serif;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.poppins-400 {
+    font-family: 'Poppins Regular', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.poppins-300 {
+    font-family: 'Poppins Light', sans-serif;
+    font-style: normal;
+    font-weight: 300;
+}
+
+.poppins-200 {
+    font-family: 'Poppins Extra Light', sans-serif;
+    font-style: normal;
+    font-weight: 200;
+}
+
+.libre-baskerville-400 {
+    font-family: 'Libre Baskerville Regular', serif;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.libre-bodoni-400 {
+    font-family: 'Libre Bodoni', serif;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.ibm-plex-sans-400 {
+    font-family: 'IBM Plex Sans Regular', monospace;
     font-style: normal;
     font-weight: 400;
 }

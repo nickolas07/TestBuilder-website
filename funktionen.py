@@ -12,7 +12,7 @@ from aufgaben.models import Themen
 
 
 def get_uuid(length: int = 8, implement: str = '') -> str:  # < 32 und % 2 == 0
-    from kontrollen.models import Erstellt
+    from tests.models import Erstellt
     uuid_list = []
     for _ in range(100):
         rand_num: int = random.randint(0, 32 - length)
@@ -78,7 +78,7 @@ def get_aufgaben(themenbereich: str = None) -> list | None:
         return output
 
     try:
-        module = importlib.import_module(f'skripteKontrollen.Aufgaben.{stufe}_{themenbereich}')
+        module = importlib.import_module(f'skripteTests.Aufgaben.{stufe}_{themenbereich}')
     except ModuleNotFoundError as e:
         raise e
     file_path: str = inspect.getmodule(module).__file__

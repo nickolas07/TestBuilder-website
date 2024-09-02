@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}Tests{% endblock %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'tests/style.css' %}"/>
+{% endblock %}
+{% block content %}
+    <span class="keine-Tests poppins-300">Zurzeit sind keine Tests verfügbar :/<br>
+        Es können dennoch unzählige unter <span style="font-weight: bold">"Aufgaben"</span> erstellt werden!</span>
+{% endblock %}

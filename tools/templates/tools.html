@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% block title %}
+    Berechnen
+{% endblock %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'tools/style.css' %}"/>
+{% endblock %}
+{% block content %}
+    <div class="tools">
+        <div class="tool border-align">
+            <div class="form-group tool-feld">
+                <label for="schriftlichMundlich">Schriftlich/Mündlich</label>
+                <input type="text" class="form-control ibm-plex-sans-400" id="schriftlichMundlich" placeholder="12, 8, 14">
+            </div>
+            <div class="form-group tool-feld">
+                <label for="klausuren">Klausuren</label>
+                <input type="text" class="form-control ibm-plex-sans-400" id="klausuren" placeholder="8">
+            </div>
+            <div class="tool-wrapper">
+                <h2 class="tool-titel">Notendurchschnitt</h2>
+                <div class="note">
+                    <span class="ibm-plex-sans-400" id="notendurchschnitt">10.22 NP</span>
+                    <span class="ibm-plex-sans-400" id="bessere-note" style="font-size: 0.9rem; font-weight: 200">&emsp;&uarr;&nbsp;&ge;13</span>
+                </div>
+            </div>
+        </div>
+        <div class="tool border-align">
+            <div class="form-group tool-feld">
+                <label for="erreicht">Erreichte Punkte</label>
+                <input type="text" class="form-control ibm-plex-sans-400" id="erreicht" placeholder="28">
+            </div>
+            <div class="form-group tool-feld">
+                <label for="erreichbar">Erreichbare Punkte</label>
+                <input type="text" class="form-control ibm-plex-sans-400" id="erreichbar" placeholder="36">
+            </div>
+            <div class="tool-wrapper">
+                <h2 class="tool-titel">Punkte</h2>
+                <span class="ibm-plex-sans-400" id="punkte" style="margin-top: 0.5rem">11 NP | 78%</span>
+            </div>
+        </div>
+    </div>
+    <script>
+        window.onload = function() {
+            document.getElementById('schriftlichMundlich').value = '';
+            document.getElementById('klausuren').value = '';
+        };
+        function durchschnitt() {
+            let schriftlichMundlich = document.getElementById('schriftlichMundlich').value.split(',')
+            let klausuren = document.getElementById('klausuren').value.split(',');
+
+            schriftlichMundlich.forEach(note => {
+                if (note === '' || /^ *$/.test(note)) {
+                    schriftlichMundlich.pop()
+                }
+            })
+
+            klausuren.forEach(note => {
+                if (note === '' || /^ *$/.test(note)) {
+                    klausuren.pop()
+                }
+            })
+            
+            schriftlichMundlich = schriftlichMundlich.map(Number)
+            klausuren = klausuren.map(Number)
+                
+            if (schriftlichMundlich.some(isNaN) || klausuren.some(isNaN)) {
+                alert('Bitte geben Sie gültige Zahlen ein');
+                return;
+            }
+
+            let schriftlichMundlichSum = schriftlichMundlich.reduce((a, b) => a + b, 0);
+            let klausurenSum = klausuren.reduce((a, b) => a + b, 0);
+            let average = (schriftlichMundlichSum * 2/3 / schriftlichMundlich.length) + (klausurenSum / 3 / klausuren.length);
+
+            if (klausurenSum === 0) {
+                average = schriftlichMundlichSum / schriftlichMundlich.length;
+            }
+
+            if (schriftlichMundlichSum === 0) {
+                average = klausurenSum / klausuren.length;
+            }
+
+            if (isNaN(average)) {
+                average = 0
+            }
+            let needed;
+            for (let i = 0; i < 16; i++) {
+                let bessere = Math.ceil(average * 2 + 0.1) / 2;
+                let temp_avg = (((schriftlichMundlichSum + i) * 2/3) / (schriftlichMundlich.length + 1) + (klausurenSum / 3 / klausuren.length)).toFixed(2);
+                
+                if (klausurenSum === 0) {
+                    temp_avg = (schriftlichMundlichSum + i) / (schriftlichMundlich.length + 1);
+                }
+
+                if (temp_avg >= bessere) {
+                    needed = i;
+                    break
+                }
+            }
+            if (needed === undefined) {
+                document.getElementById('bessere-note').innerHTML = '';
+            } else {
+                document.getElementById('bessere-note').innerHTML = '&emsp;&uarr;&nbsp;&ge;' + needed;
+            }
+
+            document.getElementById('notendurchschnitt').innerHTML = average.toFixed(2) + ' NP';
+        }
+
+        document.getElementById('schriftlichMundlich').addEventListener('input', durchschnitt);
+        document.getElementById('klausuren').addEventListener('input', durchschnitt);
+
+        function punkte() {
+            let tabelle = {100: 15, 95: 15, 90: 14, 85: 13, 80: 12, 75: 11, 70: 10, 65: 9, 60: 8, 55: 7, 50: 6, 45: 5, 40: 4, 33: 3, 27: 2, 20: 1}
+            let erreicht = +document.getElementById('erreicht').value;
+            let erreichbar = +document.getElementById('erreichbar').value;
+            let punkte = (erreicht / erreichbar).toFixed(2)
+            
+            if (isNaN(punkte)) {
+                punkte = 0
+            } else if (punkte > 1) {
+                punkte = 1
+            }
+
+            if (punkte >= 0.40) {
+                document.getElementById('punkte').innerHTML = tabelle[Math.floor((punkte * 100) / 5) * 5] + ' NP&ensp;|&ensp;' + punkte * 100 + '%'
+            }
+            else if (punkte >= 0.33) {
+                document.getElementById('punkte').innerHTML = tabelle[33] + ' NP&ensp;|&ensp;' + punkte * 100 + '% '
+            } else if (punkte >= 0.27) {
+                document.getElementById('punkte').innerHTML = tabelle[27] + ' NP&ensp;|&ensp;' +punkte * 100 + '% '
+            } else if (punkte >= 0.20) {
+                document.getElementById('punkte').innerHTML = tabelle[20] + ' NP&ensp;|&ensp;' +punkte * 100 + '% '
+            } else {
+                document.getElementById('punkte').innerHTML =  0 + ' NP&ensp;|&ensp;' + punkte * 100 + '% '
+            }
+
+            }
+        document.getElementById('erreicht').addEventListener('input', punkte);
+        document.getElementById('erreichbar').addEventListener('input', punkte);
+    </script>
+{% endblock %}

@@ -4,11 +4,13 @@
     align-items: center;
     height: 80vh;
     overflow-y: hidden;
+    margin: 2%;
 }
 
 .home-title {
     font-size: 9rem;
     max-width: 1150px;
+    margin-right: auto;
 }
 
 .home-subtitle {
@@ -18,6 +20,14 @@
 }
 
 @media only screen and (max-width: 1000px) {
+    .home-wrapper {
+        justify-content: flex-start;
+        align-items: center;
+        height: 95%;
+        flex-wrap: wrap;
+        overflow-y: hidden;
+    }
+
     .home-title {
         font-size: 4rem;
         max-width: fit-content;
@@ -29,13 +39,5 @@
         margin-right: auto;
         text-align: left;
         max-width: fit-content;
-    }
-
-    .home-wrapper {
-        justify-content: flex-start;
-        align-items: center;
-        height: 95%;
-        flex-wrap: wrap;
-        overflow-y: hidden;
     }
 }

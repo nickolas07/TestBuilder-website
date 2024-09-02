@@ -1,0 +1,47 @@
+.tool {
+    display: grid;
+    grid-template: repeat(2, 1fr) 1.5fr / repeat(1, 1fr);
+    grid-gap: 1rem;
+    align-items: center;
+    justify-items: center;
+    width: 20rem;
+    margin: 2rem;
+}
+
+.tool-feld {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.tool-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#notendurchschnitt, #punkte {
+    font-size: 1.5rem;
+}
+
+.tool-titel {
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+.tools {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.note {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: start;
+    margin-top: 0.5rem;
+}

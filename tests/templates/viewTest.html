@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}{{ name }}{% endblock %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'tests/style.css' %}"/>
+{% endblock %}
+{% block content %}
+    <div class="border-align">
+        <h1 style="margin-bottom: 0">{{ name }}</h1>
+        {% if beispiel %}
+            <div class="view-test-beispiel">
+                <a href="/tests/pdf/{{ identifier }}" target="_blank" class="btn btn-outline-secondary vt-button link-light link-offset-2 link-underline link-underline-opacity-0">Ansehen</a>
+                <a href="/tests/pdf/{{ identifier }} - Lsg" target="_blank" class="btn btn-outline-secondary vt-button link-light link-offset-2 link-underline link-underline-opacity-0">Lösung Ansehen</a>
+            </div>
+        {% else %}
+            <div class="view-test">
+                <a href="/test/pdf/{{ identifier }}" target="_blank" class="btn btn-outline-secondary vt-button link-light link-offset-2 link-underline link-underline-opacity-0">Ansehen</a>
+                <a href="/tests/pdf/{{ identifier }} - Lsg" target="_blank" class="btn btn-outline-secondary vt-button link-light link-offset-2 link-underline link-underline-opacity-0">Lösung Ansehen</a>
+                <a href="/tests/download/{{ identifier }}" class="btn btn-outline-secondary vt-button link-light link-offset-2 link-underline link-underline-opacity-0">Herunterladen</a>
+                <a href="/tests/download/{{ identifier }} - Lsg" class="btn btn-outline-secondary vt-button link-light link-offset-2 link-underline link-underline-opacity-0">Lösung Herunterladen</a>
+                <a href="/suchen/delete/{{ identifier }}" class="btn-delete btn btn-outline-danger vt-button link-light link-offset-2 link-underline link-underline-opacity-0">Löschen</a>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,5 +1,5 @@
 /*suchen*/
-.kontrolle-suchen {
+.test-suchen {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -11,7 +11,7 @@
     height: fit-content;
 }
 
-.otp-wrapper {
+.code-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -20,7 +20,7 @@
     width: 300px;
 }
 
-.otp-group {
+.code-group {
     display: flex;
     width: 75%;
     justify-content: center;
@@ -29,7 +29,7 @@
     margin: auto;
 }
 
-.otp {
+.code {
     display: flex;
     align-items: center;
     text-transform: uppercase;
@@ -65,7 +65,7 @@
         font-size: 4rem;
     }
 
-    .otp-group {
+    .code-group {
         display: grid;
         grid: repeat(3, 1fr) / repeat(4, 1fr);
         gap: 1rem;
@@ -73,7 +73,7 @@
         align-items: center;
     }
 
-    .otp {
+    .code {
         margin-right: 0 !important;
         margin-left: 0 !important;
         width: 15vw;
@@ -97,7 +97,7 @@
 }
 
 /*nichtGefunden*/
-.not-found {
+.nicht-gefunden {
     font-size: 5.5rem;
     text-align: center;
     margin-top: 20vh;
@@ -115,7 +115,7 @@
 }
 
 @media only screen and (max-width: 1000px) {
-    .not-found {
+    .nicht-gefunden {
         font-size: 3rem;
     }
 

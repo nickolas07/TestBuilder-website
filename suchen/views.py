@@ -5,7 +5,7 @@ import time
 from django.db.models import QuerySet
 from django.shortcuts import render, redirect
 
-from kontrollen.models import Erstellt
+from tests.models import Erstellt
 from suchen.forms import Suchen
 
 path = '/'.join(os.path.abspath(__file__).split('\\')[:-2])
@@ -21,20 +21,20 @@ def suchen(request):
                 uuid += str(value).upper()
                 uuid += '-' if len(uuid) == 4 else ''
 
-            kontrolle_db: QuerySet = Erstellt.objects.filter(uuid=uuid).values()
-            if kontrolle_db:
-                kontrolle__db_str = f'{kontrolle_db[0]['identifier']} {kontrolle_db[0]['uuid']}'
+            test_db: QuerySet = Erstellt.objects.filter(uuid=uuid).values()
+            if test_db:
+                test_db_str = f'{test_db[0]['identifier']} {test_db[0]['uuid']}'
             else:
-                kontrolle__db_str = None
+                test_db_str = None
 
-            kontrolle_file = glob.glob(f'{path}/skripteKontrollen/pdf/*{uuid}.pdf')
-            kontrolle_file_str = kontrolle_file[0].split('\\')[1][:-4] if kontrolle_file else None
+            test_file = glob.glob(f'{path}/skripteTests/pdf/*{uuid}.pdf')
+            test_file_str = test_file[0].split('\\')[1][:-4] if test_file else None
 
-            if kontrolle__db_str == kontrolle_file_str and (
-                    kontrolle__db_str is not None and kontrolle__db_str is not None):
-                return redirect(to=f'/kontrollen/{kontrolle__db_str}/')
+            if test_db_str == test_file_str and (
+                    test_db_str is not None and test_db_str is not None):
+                return redirect(to=f'/tests/{test_db_str}/')
             else:
-                return redirect(to=f'notFound/')
+                return redirect(to=f'nicht-gefunden/')
     else:
         form = Suchen()
     return render(request, 'suchen.html', {'form': form})
@@ -46,7 +46,7 @@ def not_found(request):
 
 def delete(request, name):
     Erstellt.objects.filter(uuid=name.split(' ')[-1]).delete()
-    os.remove(f'{path}/skripteKontrollen/pdf/{name}.pdf')
-    os.remove(f'{path}/skripteKontrollen/pdf/{name} - Lsg.pdf')
+    os.remove(f'{path}/skripteTests/pdf/{name}.pdf')
+    os.remove(f'{path}/skripteTests/pdf/{name} - Lsg.pdf')
     time.sleep(1)
     return redirect(to=f'/')

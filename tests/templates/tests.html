@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load clean_identifier %}
+{% block title %}Tests{% endblock %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'tests/style.css' %}"/>
+{% endblock %}
+{% block content %}
+    <div class="tests-wrapper">
+        <div class="version">
+            <strong>Version vom:</strong> 2. September 2024, 16:30 Uhr
+        </div>
+        <div class="row test-row">
+            {% for test in Tests %}
+                <ul class="test col list-group">
+                    <li class="list-group-item test-li p-3 justify-content-between align-items-center">
+                        <div class="test-text">
+                            {{ test.name }}
+                        <div class="test-subtitle">
+                            {{ test.identifier|clean_identifier }}
+                        </div>
+                            <br>
+                            {% if test.beispiel %}
+                                <a type="button" class="test-beispiel btn btn-outline-secondary" href="Beispiel {{ test.identifier }}" target="_blank">Beispiel</a>
+                            {% else %}
+                                <a type="button" class="test-beispiel btn btn-outline-secondary disabled" href="Beispiel {{ test.identifier }}" target="_blank">Beispiel</a>
+                            {% endif %}
+                        </div>
+                        <div class="btn-group" role="group">
+                            <a type="button" class="btn btn-outline-secondary" href="probe/{{ test.identifier }}" target="_self">Probe</a>
+                            <a type="button" class="btn btn-outline-success" href="erstellen/{{ test.identifier }}" target="_self">Erstellen</a>
+                        </div>
+                    </li>
+                </ul>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
