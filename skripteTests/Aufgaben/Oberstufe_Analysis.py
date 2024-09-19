@@ -14,8 +14,9 @@ from skripteTests.skripte.plotten import *
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
 # Aufgaben zu den Regeln
-
+# Anzahl=number BE=text
 def logarithmusgesetze(nr, anzahl=1, BE=[]):
+    # Logarithmusgesetze vervollständigen
     # Hier sollen die Schüler und Schülerinnen Logarithmusgesetze vervollständigen.
     # Mit dem Argument "anzahl=" kann die Anzahl der zufällig ausgewählten Logarithmusgesetze festgelegt werden.
     # Standardmäßig wird immer ein Gesetz erstellt.
@@ -66,7 +67,9 @@ def logarithmusgesetze(nr, anzahl=1, BE=[]):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
+# Anzahl=number BE=text
 def rechenregeln_integrale(nr, anzahl=1, BE=[]):
+    # Rechenregeln der Integralrechnung vervollständigen
     # Hier sollen die Schüler und Schülerinnen Rechenregeln der Integralrechnung vervollständigen.
     # Mit dem Argument "anzahl=" kann die Anzahl der zufällig ausgewählten Regeln festgelegt werden.
     # Standardmäßig wird immer eine Regel erstellt.
@@ -119,7 +122,9 @@ def rechenregeln_integrale(nr, anzahl=1, BE=[]):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 # Aufgaben zur Differenzialrechnung
-def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=None, BE=[]):
+# folgenart=[keine_Vorschrift,arithmetisch,geometrisch] BE=text
+def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], folgenart=None, BE=[]):
+    # Zahlenfolge um weitere Folgenglieder ergänzen, die Art erkennen, ein Bildungsgesetz benennen und ggf. ein bestimmtes Folgenglied berechnen
     # Hier sollen die SuS Zahlenfolge um weitere Folgenglieder ergänzen, die Art (arithmetisch oder geometrisch) erkennen, ein Bildungsgesetz benennen und ggf. ein bestimmtes Folgenglied berechnen.
     # Mit "ausw_folgenart=" kann festgelegt werden, ob es sich um arithmetische oder geometrische Zahlenfolge handelt, oder keine spezielle Zahlenfolge vorliegt. Der Parameter "ausw_folgenart=" kann None, 'arithmetisch', 'geometrisch' oder 'keine Vorschrift' sein. Standardmäßig ist None eingestellt und die Auswahl damit zufällig.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
@@ -152,10 +157,10 @@ def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=None, BE=[]):
                     latex(start_geom_folge) + r' \cdot ' + latex(geom_folge_q) + r'^{n-1}',
                     bel_vorschrift_str[ausw_folge]]
     liste_folgen = [ 'arithmetisch', 'geometrisch', 'keine Vorschrift']
-    ausw_folgenart = random.choice(liste_folgen) if ausw_folgenart == None else ausw_folgenart
+    folgenart = random.choice(liste_folgen) if folgenart == None else folgenart
     exit(f"ausw_folgenart muss None, oder 'arithmetisch', 'geometrisch', 'keine Vorschrift' sein")\
-        if ausw_folgenart not in liste_folgen else ausw_folgenart
-    auswahl_folgenart = liste_folgen.index(ausw_folgenart)
+        if folgenart not in liste_folgen else folgenart
+    auswahl_folgenart = liste_folgen.index(folgenart)
     a_n = a_n_alle[auswahl_folgenart]
     a_n_str = a_n_str_alle[auswahl_folgenart]
     data = [a_n.subs(x, element) for element in range(1, 5)]
@@ -170,6 +175,7 @@ def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=None, BE=[]):
     grafiken_loesung = []
 
     if 'a' in teilaufg:
+        # Gegebene Zahlenfolge um drei weitere Glieder ergänzen
         # Die SuS sollen eine gegebene Zahlenfolge um drei weitere Glieder ergänzen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(liste_teilaufg[i]) + ') Setze die Zahlenfolge um drei weitere Glieder fort. \n\n')
@@ -180,6 +186,7 @@ def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=None, BE=[]):
         i += 1
 
     if 'b' in teilaufg:
+        # Überprüfen, ob es sich um eine arithmetische oder geometrische Zahlenfolge handelt
         # Die SuS sollen entscheiden, ob eine arithmetische oder geometrische Zahlenfolge vorliegt
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(liste_teilaufg[i]) + ') Überprüfe ob es sich um eine arithmetische oder geometrische '
@@ -224,6 +231,7 @@ def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=None, BE=[]):
         i += 1
 
     if 'c' in teilaufg:
+        # Bildungsgesetz der gegebenen Zahlenfolge finden/nennen
         # Die SuS sollen das Bildungsgesetz der gegebenen Zahlenfolge finden bzw. nennen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(liste_teilaufg[i]) + ') Nenne das Bildungsgesetz der Zahlenfolge. \n\n')
@@ -232,6 +240,7 @@ def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=None, BE=[]):
         i += 1
 
     if 'd' in teilaufg and auswahl_folgenart < 2:
+        # Bestimmtes Folgenglied berechnen (nur wenn es sich um eine arithmetische oder geometrische Zahlenfolge handelt)
         # Die Teilaufgabe wird nur angezeigt, wenn eine arithmetische oder geometrische Zahlenfolge vorliegt. Hier sollen die SuS ein bestimmtes Folgenglied berechnen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         if auswahl_folgenart == 0:
@@ -266,7 +275,9 @@ def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=None, BE=[]):
             liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def grenzwerte_folge(nr, ausw_folgenart=None, BE=[]):
+# folgenart=[keine_Vorschrift,arithmetisch,geometrisch] BE=text
+def grenzwerte_folge(nr, folgenart=None, BE=[]):
+    # Grenzwert einer Zahlenfolge berechnen
     # In dieser Aufgabe sollen die SuS den Grenzwert einer bestimmten Zahlenfolgen berechnen. Die Aufgabe hat keine Teilaufgaben.
     # Mit "ausw_folgenart=" kann festgelegt werden, ob es sich um arithmetische oder geometrische Zahlenfolge handelt, oder keine spezielle Zahlenfolge vorliegt. Der Parameter "ausw_folgenart=" kann None, 'arithmetisch', 'geometrisch' oder 'keine Vorschrift' sein. Standardmäßig ist None eingestellt und die Auswahl damit zufällig.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
@@ -296,10 +307,10 @@ def grenzwerte_folge(nr, ausw_folgenart=None, BE=[]):
                     latex(start_geom_folge) + r' \cdot \left(' + latex(geom_folge_q) + r' \right) ^{n-1}',
                     bel_vorschrift_str[ausw_folge]]
     liste_folgen = [ 'arithmetisch', 'geometrisch', 'keine Vorschrift']
-    ausw_folgenart = random.choice(liste_folgen) if ausw_folgenart == None else ausw_folgenart
+    folgenart = random.choice(liste_folgen) if folgenart == None else folgenart
     exit(f"ausw_folgenart muss None, oder 'arithmetisch', 'geometrisch', 'keine Vorschrift' sein")\
-        if ausw_folgenart not in liste_folgen else ausw_folgenart
-    auswahl_folgenart = liste_folgen.index(ausw_folgenart)
+        if folgenart not in liste_folgen else folgenart
+    auswahl_folgenart = liste_folgen.index(folgenart)
     a_n = a_n_alle[auswahl_folgenart]
     a_n_str = a_n_str_alle[auswahl_folgenart]
     print(a_n)
@@ -317,7 +328,9 @@ def grenzwerte_folge(nr, ausw_folgenart=None, BE=[]):
         liste_punkte = [2]
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
+# BE=text
 def grenzwerte_funktionen(nr, BE=[]):
+    # Grenzwert einer rationalen Funktion berechnen
     # In dieser Aufgabe sollen die SuS den Grenzwert einer rationalen Funktion berechnen. Die Aufgabe besitzt keine Teilaufgaben.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_bez = [f'{nr}']
@@ -344,6 +357,7 @@ def grenzwerte_funktionen(nr, BE=[]):
         liste_punkte = [2]
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
+# BE=text
 def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=False, BE=[]):
     # In dieser Aufgabe sollen die SuS die mittlere Änderungsrate in einem gegebenen Intervall und lokale Änderungsrate an einer gegebenen Stelle einer Funktion rechnerisch und zeichnerisch bestimmen.
     # Der Parameter "ableitung=" kann 'True' oder 'False' sein und gibt die mögliche Lösung für Teilaufgabe d) vor. Bei 'False' kennen die SuS die Ableitung einer Funktion noch nicht und müssen die lokale Änderungsrate mit einer Grenzwertberechnung bestimmen. Bei 'True' ist es die triviale Lösung mithilfe der Ableitung der Funktion.
@@ -662,6 +676,7 @@ def differentialqoutient(nr, teilaufg=['a', 'b'], BE=[]):
             liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
+# BE=text
 def grafisches_ableiten(nr, teilaufg=['a', 'b'], BE=[]):
     # Die SuS sollen in einem gegebenen Graphen einer Funktion den Graphen der Ableitungsfunktion skizzieren und den skizzierten Verlauf begründen.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
@@ -733,7 +748,7 @@ def grafisches_ableiten(nr, teilaufg=['a', 'b'], BE=[]):
         else:
             liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
-
+# BE=text
 def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False, BE=[]):
     # Die SuS sollen mithilfe der Ableitungsregeln die Ableitungen verschiedener Funktionen bestimmen.
     # Mithilfe von "teilaufg=[]" können folgenden Funktionstypen (auch mehrfach der Form ['a', 'a', ...]) ausgewählt werden:
@@ -929,6 +944,7 @@ def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
         liste_punkte = [punkte]
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
+# BE=text
 def anwend_abl_seilbahn(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
     # In dieser Aufgabe sollen die SuS verschiedene Anwendungen der Ableitung am Beispiel eines Hügels, dessen Gipfel mit einer Seilbahn erreicht werden kann, kennenlernen.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
@@ -1906,6 +1922,7 @@ def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 # Aufgaben zur Integralrechnung
+
 def unbestimmtes_integral(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl=False, BE=[]):
     # Die SuS sollen verschiedene Funktionen ableiten.
     # Mithilfe von "teilaufg=[]" können folgenden Gleichungstypen (auch mehrfach der Form ['a', 'a', ...]) ausgewählt werden:
@@ -2215,6 +2232,7 @@ def bestimmtes_integral(nr, teilaufg=['a', 'b'], grad=3, BE=[]):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 # Komplexe Aufgaben (d.h. zur Differenzial- und Integralrechnung)
+
 def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], ableitungen=None, grad=3, wendenormale=True, BE=[]):
     # In dieser Aufgabe sollen die SuS eine vollständige Kurvendiskussion eines Polynoms (dritten oder vierten Grades) durchführen.
     # Mit dem Parameter 'ableitungen=' kann Teilaufgabe d) festgelegt werden. Standardmäßig ist 'ableitung=None' und die SuS müssen in Teilaufgabe d) die Ableitungen berechnen. Ist 'ableitungen=True' sind die Ableitungen gegeben und die SuS müssen mithilfe der Ableitungsregeln die Berechnung der Ableitung erläutern.
@@ -3630,6 +3648,7 @@ def kurvendiskussion_exponentialfkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 # in Entwicklung:
+
 def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
     # Kurvendiskussion einer Polynom- und Parameterfunktion 1
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden (z.B. liste_punkte=[1,2,3]). Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
@@ -3893,6 +3912,7 @@ def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 # alte Aufgaben, die nicht mehr benötigt werden bzw. von denen eine verbesserte Version existiert
+
 def kurvendiskussion_polynome_alt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], ableitungen=None, nullstellen=None, wendenormale=True, BE=[]):
     # In dieser Aufgabe sollen die SuS eine vollständige Kurvendiskussion eines Polynoms dritten Grades durchführen.
     # Mit dem Parameter 'ableitungen=' kann Teilaufgabe d) festgelegt werden. Standardmäßig ist 'ableitung=None' und die SuS müssen in Teilaufgabe d) die Ableitungen berechnen. Ist 'ableitungen=True' sind die Ableitungen gegeben und die SuS müssen mithilfe der Ableitungsregeln die Berechnung der Ableitung erläutern.
@@ -4251,6 +4271,7 @@ def kurvendiskussion_polynome_alt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g
                    + vorz_v_innen(Rational(fkt_a3, 2), 'x^2') + vorz_v_innen(fkt_a4, 'x'))
 
         def erste_positive_nst(vec):
+
             # print(vec)
             vec.sort()
             # print(vec)

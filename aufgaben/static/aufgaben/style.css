@@ -20,11 +20,20 @@
 
 .parent-div {
     display: flex;
-    flex-direction: row;
-    align-items: center;
+    flex-direction: column;
     text-align: left;
     font-size: 1.25rem;
-    font-weight: 450;
+}
+
+.parent-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.auswahl {
+    font-size: 1rem;
+    margin-top: 3%;
 }
 
 .child-label {
@@ -49,6 +58,14 @@
 
 .aufgabe-subtitle {
     font-size: 1.2rem;
+}
+
+.eingaben {
+    max-width: 50%;
+}
+
+.eingabe-bsp {
+    font-size: 0.85rem;
 }
 
 @media only screen and (max-width: 500px) and (orientation: portrait) {

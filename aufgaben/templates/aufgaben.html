@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+{% load clean_auswahl %}
+{% load index %}
+{% load multi_bsp %}
 {% block title %}
     {{ themenbereich }}
 {% endblock %}
@@ -58,6 +61,7 @@
         <div class="aufgabe-title">
             <span class="aufgabe-subtitle rubik-200">{{ stufe }}</span>
             <h1>{{ themenbereich }}</h1>
+            <span class="rubik-200">Alle Optionen für Angaben sind optional.<br>Wenn Sie nichts spezifizieren oder die Eingabe das falsche Format hat, wird ein Standardwert verwendet.</span>
         </div>
         <form method="post">
             {% csrf_token %}
@@ -65,24 +69,57 @@
                 {% for aufgabe in aufgaben %}
                     <li class="aufgabe list-group-item checkbox-group">
                     <div class="parent-div">
-                        <input class="form-check-input me-1 parent parentCheckbox" type="checkbox" value=""
-                               id="parent_{{forloop.counter}}"
-                               name="parent_{{forloop.counter}}">
-                        <label class="form-check-label parent"
-                               for="parent_{{forloop.counter}}">
-                          {{ aufgabe.0 }}
-                        </label>
+                        <div class="parent-title">
+                            <input class="form-check-input me-1 parent parentCheckbox" type="checkbox" value="Aufgabe_{{forloop.counter}}"
+                               id="Aufgabe_{{forloop.counter}}"
+                               name="Aufgabe_{{forloop.counter}}">
+                            <label class="form-check-label parent"
+                               for="Aufgabe_{{forloop.counter}}">
+                              {{ aufgabe.0 }}
+                            </label>
+                        </div>
+                        {% if parameter|index:forloop.counter0 is not None %}
+                            <div class="row auswahl">
+                                {% for auswahl in parameter|index:forloop.counter0 %}
+                                        <div class="col-md eingaben">
+                                            <div class="form-floating mb-3">
+                                                {% if auswahl.1 == 'selection' %}
+                                                    <select name="{{ auswahl.0|clean_auswahl }}_{{ forloop.parentloop.counter }}" class="form-select" id="floating_{{ auswahl.0 }}_{{ forloop.parentloop.counter }}">
+                                                        {% for item in auswahl.2 %}
+                                                            <option value="{{ item|clean_auswahl }}">{{ item|clean_auswahl }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                    <label for="floating_{{ auswahl.0 }}_{{ forloop.parentloop.counter }}">{{ auswahl.0|clean_auswahl }}</label>
+                                                {% else %}
+                                                    {% if aufgabe.2|length == 0 %}
+                                                        {% if auswahl.0|clean_auswahl == 'BE' %}
+                                                            <input type="{{ auswahl.1 }}" name="{{ auswahl.0|clean_auswahl }}_{{ forloop.parentloop.counter }}" class="form-control" id="floating_{{ auswahl.0 }}_{{ forloop.parentloop.counter }}" placeholder="{{ auswahl.0|clean_auswahl }}">
+                                                            <label for="floating_{{ auswahl.0 }}_{{ forloop.parentloop.counter }}">{{ auswahl.0|clean_auswahl }} &nbsp;<span class="rubik-200 eingabe-bsp">Bsp: {{ aufgabe.2|length|multi_bsp }}</span></label>
+                                                        {% else %}
+                                                            <input type="{{ auswahl.1 }}" name="{{ auswahl.0|clean_auswahl }}_{{ forloop.parentloop.counter }}" class="form-control" id="floating_{{ auswahl.0 }}_{{ forloop.parentloop.counter }}" placeholder="{{ auswahl.0|clean_auswahl }}">
+                                                            <label for="floating_{{ auswahl.0 }}_{{ forloop.parentloop.counter }}">{{ auswahl.0|clean_auswahl }}</label>
+                                                        {% endif %}
+                                                    {% else %}
+                                                        <input type="{{ auswahl.1 }}" name="{{ auswahl.0|clean_auswahl }}_{{ forloop.parentloop.counter }}" class="form-control" id="floating_{{ auswahl.0 }}_{{ forloop.parentloop.counter }}" placeholder="{{ auswahl.0|clean_auswahl }}">
+                                                        <label for="floating_{{ auswahl.0 }}_{{ forloop.parentloop.counter }}">{{ auswahl.0|clean_auswahl }} &nbsp;<span class="rubik-200 eingabe-bsp">Bsp: {{ aufgabe.2|length|multi_bsp }}</span></label>
+                                                    {% endif %}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
                     </div>
-                        {% if aufgabe.1 %}
+                        {% if aufgabe.2 %}
                             <ul class="list-group list-child" style="margin-top: 2%;">
-                                {% for teilaufg in aufgabe.1 %}
+                                {% for teilaufg in aufgabe.2 %}
                                     <li class="list-group-item">
                                         <div class="form-check child-div">
-                                            <input class="form-check-input me-1 childCheckbox" type="checkbox" value=""
-                                                   id="child_{{forloop.parentloop.counter}}_{{forloop.counter}}"
-                                                   name="child_{{forloop.parentloop.counter}}_{{forloop.counter}}">
+                                            <input class="form-check-input me-1 childCheckbox" type="checkbox" value="Aufgabe_{{forloop.parentloop.counter}}_{{forloop.counter}}"
+                                                   id="Aufgabe_{{forloop.parentloop.counter}}_{{forloop.counter}}"
+                                                   name="Aufgabe_{{forloop.parentloop.counter}}_{{forloop.counter}}">
                                             <label class="form-check-label child-label"
-                                                   for="child_{{forloop.parentloop.counter}}_{{forloop.counter}}">
+                                                   for="Aufgabe_{{forloop.parentloop.counter}}_{{forloop.counter}}">
                                                 {{ teilaufg.1 }}
                                             </label>
                                         </div>

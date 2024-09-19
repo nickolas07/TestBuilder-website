@@ -10,6 +10,7 @@ from tests.forms import TestErstellen
 from tests.models import Test, Erstellt
 
 from aufgaben.models import Themen
+from skripteTests import themen
 
 path = '/'.join(os.path.abspath(__file__).split('\\')[:-2])
 
@@ -63,14 +64,13 @@ def download(response, identifier):
         return response
 
 
-def erstellen(identifier, schule='', schulart='', kurs='', lehrer='', klasse='', titel='', datum='', probe=True, aufgaben=None, schnell=False):
+def erstellen(identifier, schule='', schulart='', kurs='', lehrer='', klasse=0, titel=None, datum='', probe=True, aufgaben=None, schnell=False):
     themenbereich = Themen.objects.filter(name=identifier).exists()
     uuid = get_uuid()
     cwd = os.getcwd()
     os.chdir(f'{path}/skripteTests')
     if themenbereich:
-        os.system(f'python "themen.py" "{identifier}" "{uuid}" "0:{schule}" "1:{schulart}" "2:{kurs}" '
-                  f'"4:{klasse}" "5:{lehrer}" "7:{titel}" "8:{datum}" "{probe}" "{aufgaben}"')
+        themen.run(path, identifier, uuid, titel, schule, schulart, kurs, klasse, lehrer, datum, probe, aufgaben)
     elif schnell:
         os.system(f'python "{identifier}.py" "{uuid}" "{probe}"')
     else:

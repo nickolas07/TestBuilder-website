@@ -90,7 +90,7 @@ def test_erzeugen(liste_seiten, angaben, probe=False):
     schnell, identifier, uuid = angaben[-3], angaben[-2], angaben[-1]
 
     print(f'\033[38;2;100;141;229m\033[1m{teil}\033[0m')
-    Datum = datetime.date.today().strftime('%d.%m.%Y') if datum is not None else datum
+    Datum = datetime.date.today().strftime('%d.%m.%Y') if datum is None else datum
 
     # Erstellung der Tabelle zur Punkteübersicht
     print(liste_punkte)
@@ -133,7 +133,8 @@ def test_erzeugen(liste_seiten, angaben, probe=False):
         else:
             table1 = Tabular('|c|p{2.5cm}|p{2.5cm}|p{2.5cm}|p{2cm}|p{2.5cm}|', row_height=1.2)
             table1.add_row((MultiColumn(6, align='c', data=MediumText(bold(schule))),))
-            table1.add_row((MultiColumn(6, align='c', data=SmallText(bold(schulart))),))
+            if schulart:
+                table1.add_row((MultiColumn(6, align='c', data=SmallText(bold(schulart))),))
             table1.add_hline()
             table1.add_row('Klasse', ' Fach', 'Niveau', 'Lehrkraft', 'Datum', 'Art')
             table1.add_hline()

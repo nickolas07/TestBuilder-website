@@ -52,9 +52,8 @@
     gap: 1rem;
     justify-items: center;
     align-items: center;
-    width: fit-content;
-    min-width: 80%;
-    margin: 2rem 2rem 0.7rem 2rem;
+    min-width: 30vw;
+    margin: 1.6rem 1.6rem 0.7rem 1.6rem;
 }
 
 .view-test-beispiel {
@@ -71,7 +70,7 @@
 
 .vt-button {
     width: 100%;
-    font-size: 1.6rem;
+    font-size: 1.5rem;
 }
 
 .btn-delete {

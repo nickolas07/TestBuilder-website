@@ -6,6 +6,8 @@ import random
 import importlib
 
 import django
+from sympy.codegen.fnodes import cmplx
+from sympy.physics.vector.printing import params
 
 django.setup()
 from aufgaben.models import Themen
@@ -46,13 +48,20 @@ def get_aufgaben(themenbereich: str = None) -> list | None:
         text = text.replace('ÃŸ', 'ß')
         return text
 
-    def in_comments(nummer: int, comments: list) -> (bool, int):
-        for i, comment in enumerate(comments):
+    def is_in_comments(nummer: int, comments_lst: list, return_comment=False) -> (bool, int):
+        num = 0
+        for num, comment in enumerate(comments_lst):
             if nummer in comment:
-                return True, i
+                if return_comment:
+                    return comment[1]
+                else:
+                    return True, num
             else:
                 continue
-        return False, i
+        if return_comment:
+            return 'None None'
+        else:
+            return False, num
 
     def tree(filename: str) -> list:
         with open(filename, 'r') as f:
@@ -67,14 +76,24 @@ def get_aufgaben(themenbereich: str = None) -> list | None:
         funktionen = [funktion for funktion in ast.walk(root) if isinstance(funktion, ast.FunctionDef)]
 
         for node in funktionen:
-            has_comment = in_comments(node.lineno + 1, comments)
+            has_comment = is_in_comments(node.lineno + 1, comments)
+            params_comment = is_in_comments(node.lineno - 1, comments, return_comment=True)
+
             if has_comment[0]:
-                output.append((node.lineno, sonderzeichen(node.name), comments[has_comment[1]][1]))
+                params = [arg.arg for arg in node.args.args]
+                try:
+                    params.remove('nr')
+                    params.remove('teilaufg')
+                except ValueError:
+                    pass
+
+                output.append((node.lineno, sonderzeichen(node.name), comments[has_comment[1]][1],
+                               (params, params_comment)))
             for child in ast.iter_child_nodes(node):
                 if isinstance(child, ast.If):
-                    has_comment = in_comments(child.lineno + 1, comments)
+                    has_comment = is_in_comments(child.lineno + 1, comments)
                     if has_comment[0]:
-                        output.append((child.lineno, 'if', comments[has_comment[1]][1]))
+                        output.append((child.lineno, 'if', comments[has_comment[1]][1], None))
         return output
 
     try:
@@ -85,15 +104,15 @@ def get_aufgaben(themenbereich: str = None) -> list | None:
     comments = {}
 
     i = 1
-    for ln, name, comment in tree(file_path):
+    for ln, name, comment, parameter in tree(file_path):
         if name == 'if':
             comments[ln] = ['if', comment]
         else:
-            comments[ln] = [str(i), name, comment]
+            comments[ln] = [str(i), name, comment, parameter]
             i += 1
 
     comments = sorted(comments.items())
-    comments.append((1, [1, 2, 3]))
+    comments.append((1, [1, 2, 3, 4]))
     new_comments = []
     temp_ifs = []
     for i, comment in enumerate(comments):
@@ -102,10 +121,11 @@ def get_aufgaben(themenbereich: str = None) -> list | None:
             if i > 0:
                 new_comments[-1].append(temp_ifs)
                 temp_ifs = []
-            new_comments.append([str(comment[0]), comment[1], comment[2]])
+            new_comments.append([str(comment[0]), comment[1], comment[2], comment[3]])
         else:
             temp_ifs.append([f'{new_comments[-1][1].split('_')[-1]}.{len(temp_ifs) + 1}', comment[1]])
 
     new_comments.pop(-1)
     new_comments = sorted(new_comments, key=lambda x: int(x[0]))
+
     return new_comments
