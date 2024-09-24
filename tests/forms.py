@@ -32,10 +32,11 @@ class TestErstellen(forms.Form):
         label='kurs',
         required=False,
         choices=[
+            ('Keine Diff.', 'Keine Differenzierung'),
             ('Grundkurs', 'Grundkurs'),
             ('Leistungskurs', 'Leistungskurs'),
             ('G-Kurs', 'G-Kurs'),
-            ('E-Kurs', 'E-Kurs')
+            ('E-Kurs', 'E-Kurs'),
         ],
         widget=forms.Select(attrs={
             'class': 'form-select',
